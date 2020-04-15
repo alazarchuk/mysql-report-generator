@@ -631,7 +631,7 @@ sub get_MySQL_version
       print "MariaDB detected\n" if $op{debug};
       $have_aria_vals = 1;
       $dbms = "MariaDB";
-      $use_thread_pool = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE FROM information_schema.global_variables WHERE VARIABLE_NAME = 'thread_handling';", undef)->[0][0];
+      $use_thread_pool = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE FROM performance_schema.global_variables WHERE VARIABLE_NAME = 'thread_handling';", undef)->[0][0];
       if(defined($use_thread_pool) && $use_thread_pool eq "pool-of-threads") {
         print "Thread pool is used\n" if $op{debug};
         $use_thread_pool = 1;
@@ -643,7 +643,7 @@ sub get_MySQL_version
       $dbms = "MySQL";
    }
 
-   $have_subquerycache_vals = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE REGEXP ',subquery_cache=on,|^subquery_cache=on,|,subquery_cache=on\$' AS SUBQUERY_CACHE FROM information_schema.global_variables WHERE VARIABLE_NAME = 'optimizer_switch';", undef)->[0][0];
+   $have_subquerycache_vals = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE REGEXP ',subquery_cache=on,|^subquery_cache=on,|,subquery_cache=on\$' AS SUBQUERY_CACHE FROM performance_schema.global_variables WHERE VARIABLE_NAME = 'optimizer_switch';", undef)->[0][0];
    if(defined($have_subquerycache_vals) && $have_subquerycache_vals eq "1")
    {
       print "Subquery cache is activated\n" if $op{debug};
@@ -651,7 +651,7 @@ sub get_MySQL_version
    } else {
       $have_subquerycache_vals = 0;
    }
-   $have_binlog_vals = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE FROM information_schema.global_variables WHERE VARIABLE_NAME = 'log_bin';", undef)->[0][0];
+   $have_binlog_vals = $dbh->selectall_arrayref("SELECT VARIABLE_VALUE FROM performance_schema.global_variables WHERE VARIABLE_NAME = 'log_bin';", undef)->[0][0];
    if(defined($have_binlog_vals) && $have_binlog_vals eq "ON")
    {
       print "Binary log is activated\n" if $op{debug};
@@ -936,14 +936,14 @@ sub make_short
 #
 # The format_u_time sub simply beautifies long_query_time.
 
-sub format_u_time  # format microsecond (µ) time value
+sub format_u_time  # format microsecond (mks) time value
 {
-   # 0.000000 - 0.000999 = 0 - 999 µ
+   # 0.000000 - 0.000999 = 0 - 999 mks
    # 0.001000 - 0.999999 = 1 ms - 999.999 ms
    # 1.000000 - n.nnnnnn = 1 s - n.nnnnn s
 
    my $t = shift;
-   my $f;  # formatted µ time
+   my $f;  # formatted mks time
    my $u = chr(($WIN ? 230 : 181));
 
    $t = 0 if $t < 0;
