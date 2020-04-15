@@ -288,7 +288,7 @@ fi
 
 if [ "$VERCOMPARE" == "1" ]; then
 
-MYSQLSTART=`$MYSQLCLI $MYSQLADMINOPT -e "SELECT FROM_UNIXTIME(UNIX_TIMESTAMP() - variable_value) AS server_start FROM PERFORMANCE_SCHEMA.GLOBAL_STATUS WHERE variable_name='Uptime';" | $GREP -Ev '+--|server_start'`
+MYSQLSTART=`$MYSQLCLI $MYSQLADMINOPT -e "SELECT FROM_UNIXTIME(UNIX_TIMESTAMP() - variable_value) AS server_start FROM performance_schema.global_status WHERE variable_name='Uptime';" | $GREP -Ev '+--|server_start'`
 
 fi
 
@@ -542,7 +542,7 @@ echo ""
 if [[ "$WEBONLY" = [nN] ]]; then
 if [ "$VERCOMPARE" == "1" ]; then
 
-MYSQLSTART=`$MYSQLCLI $MYSQLADMINOPT -e "SELECT FROM_UNIXTIME(UNIX_TIMESTAMP() - variable_value) AS server_start FROM PERFORMANCE_SCHEMA.GLOBAL_STATUS WHERE variable_name='Uptime';" | $GREP -Ev '+--|server_start'`
+MYSQLSTART=`$MYSQLCLI $MYSQLADMINOPT -e "SELECT FROM_UNIXTIME(UNIX_TIMESTAMP() - variable_value) AS server_start FROM performance_schema.global_status WHERE variable_name='Uptime';" | $GREP -Ev '+--|server_start'`
 
 echo "---------------"
 echo "$MYSQLVER"
