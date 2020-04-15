@@ -129,7 +129,7 @@ AWK="$(which awk)"
 TR="$(which tr)"
 LYNX=$(which lynx)
 
-SRCDIR='/root'
+SRCDIR='~/'
 MYSQLREPORTPATH="${SRCDIR}/mysqlreport"
 MYSQLREPORTFILE="${SRCDIR}/mysqlinfo.txt"
 
