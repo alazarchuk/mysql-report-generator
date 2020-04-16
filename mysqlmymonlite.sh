@@ -1456,12 +1456,14 @@ echo "----------------------------"
 	$MYSQLCLI $MYSQLADMINOPT -e 'show engine innodb status\G'
 fi
 
+if [[ "$MYSQLLOCAL" = [yY] ]]; then
 echo ""
 echo "----------------------------"
 echo "MySQL Error Log"
 echo "----------------------------"
 echo "tail -50 $ERRORLOG"
 echo ""
+fi
 
 if [ -z "$ERRORLOG" ]; then
 echo "MySQL error log not set"
