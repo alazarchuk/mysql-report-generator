@@ -1,7 +1,7 @@
 Description
 ===========
 
-It is slightly modified debian version of mysqlmymonlite.sh file from mysqlmymon.com. Paths to external files were changed and unnecessary report section were disabled when MySQL is on remote server.
+It is slightly modified Debian/Ubuntu version of mysqlmymonlite.sh file from mysqlmymon.com. Paths to external files were changed and unnecessary report section were disabled when MySQL is on remote server.
 
 Installing Dependencies
 =======================
