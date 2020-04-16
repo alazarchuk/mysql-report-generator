@@ -73,6 +73,7 @@ MYSQLEXTRA_FILE='/root/.my.cnf'
 # which relate to how much memory and swap space your
 # remote MySQL server has i.e. 512MB & 512MB
 MYSQLHOST='localhost'
+MYSQLLOCAL='y'
 FORCEMEM='512'
 FORCESWAP='512'
 # change from n to y if this server is dedicated
@@ -121,6 +122,10 @@ fi
 if [[ "$WEBONLY" = [nN] ]]; then
 	MYSQLADMIN="$(which mysqladmin)"
 	MYSQLCLI="$(which mysql)"
+fi
+
+if [[ "$MYSQLHOST" != 'localhost' && "$MYSQLHOST" != '127.0.0.1' ]]; then
+	MYSQLLOCAL='n'
 fi
 
 GREP="grep"
@@ -862,11 +867,13 @@ df -Th
 function funct_mysqldiskusage {
 
 if [[ "$WEBONLY" = [nN] ]]; then
+if [[ "$MYSQLLOCAL" = [yY] ]]; then
 echo ""
 echo "----------------------------"
 echo "MySQL datadir disk usage"
 echo "----------------------------"
 echo "$DATADIRL uses $DU kilobytes of disk space"
+fi
 fi
 
 }
