@@ -1463,7 +1463,6 @@ echo "MySQL Error Log"
 echo "----------------------------"
 echo "tail -50 $ERRORLOG"
 echo ""
-fi
 
 if [ -z "$ERRORLOG" ]; then
 echo "MySQL error log not set"
@@ -1471,6 +1470,8 @@ elif [[ $ERRORLOG != '|' ]]; then
 tail -50 $ERRORLOG | sed -e "s/`hostname`/yourserverhostname/g"
 else
 echo "MySQL error log not set"
+fi
+
 fi
 
 echo ""
