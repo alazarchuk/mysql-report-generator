@@ -29,17 +29,20 @@ Set host in etc/config.ini:
 Usage
 =====
 
-Download:
+Download
+--------
 
     git clone https://github.com/alazarchuk/mysql-report-generator.git
     cd mysql-report-generator
 
-MySQL Reporting:
+MySQL Reporting
+---------------
 
     ./mysqlmymonlite.sh mysql # For full report
     ./mysqlmymonlite.sh mysqlreport # Only output of mysqlreport tool
 
-MySQL Indexes:
+MySQL Indexes
+-------------
 
     ./mysqlmymonlite.sh dblist
     employees innodb mysql performance_schema sys
