@@ -856,11 +856,13 @@ smemstats
 
 function funct_serverdiskusage {
 
+if [[ "$MYSQLLOCAL" = [yY] ]]; then
 echo ""
 echo "----------------------------"
 echo "Server Disk Usage"
 echo "----------------------------"
 df -Th
+fi
 
 }
 
@@ -1312,6 +1314,7 @@ echo "$MYSQLUPTIME"
 echo ""
 funct_quickmysqlinfo
 
+if [[ "$MYSQLLOCAL" = [yY] ]]; then
 echo ""
 echo "----------------------------"
 echo "Server Disk Usage"
@@ -1323,6 +1326,7 @@ echo "----------------------------"
 echo "MySQL datadir disk usage"
 echo "----------------------------"
 echo "$DATADIRL uses $DU kilobytes of disk space"
+fi
 
 funct_mysqlreportoutput
 
