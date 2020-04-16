@@ -113,7 +113,7 @@ NGINXCONFPATHOVERRIDE=''
 EXCLUDEDB="test information_schema mysql"
 
 if [ -f ./config.ini ]; then
-source "./config.ini"
+source "./etc/config.ini"
 fi
 #######################################################
 # DO NOT EDIT BELOW THIS SECTION
@@ -135,7 +135,7 @@ TR="$(which tr)"
 LYNX=$(which lynx)
 
 SRCDIR="$(pwd)"
-MYSQLREPORTPATH="${SRCDIR}/mysqlreport"
+MYSQLREPORTPATH="${SRCDIR}/utils/mysqlreport"
 MYSQLREPORTFILE="${SRCDIR}/mysqlinfo.txt"
 
 if [[ "$MYSQLEXTRA_FILE" = 'echo ~/.my.cnf' ]]; then
@@ -152,8 +152,8 @@ else
 		echo " with contents of:"
 echo "
 [client]
-user="root"
-password=yourmysql_rootpassword"
+user=<user>
+password=<password>"
 		echo
 		echo
 exit
