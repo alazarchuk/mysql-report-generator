@@ -112,7 +112,7 @@ NGINXCONFPATHOVERRIDE=''
 #######################################################
 EXCLUDEDB="test information_schema mysql"
 
-if [ -f ./config.ini ]; then
+if [ -f ./etc/config.ini ]; then
 source "./etc/config.ini"
 fi
 #######################################################
