@@ -1724,18 +1724,7 @@ echo "----------------------------"
 echo "mysqlreport output"
 echo "----------------------------"
 
-cd $SRCDIR
-
-if [ -s mysqlreport ]; then
-  echo ""
-  else
-  
-  wget -q -c http://mysqlmymon.com/mysqlreport/mysqlreport
-fi
-
-chmod +x mysqlreport
-
-$SRCDIR/mysqlreport $MYSQLREPORTOPT 2>/dev/null
+$SRCDIR/utils mysqlreport $MYSQLREPORTOPT 2>/dev/null
 
 }
 
