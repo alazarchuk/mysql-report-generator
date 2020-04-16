@@ -1724,7 +1724,7 @@ echo "----------------------------"
 echo "mysqlreport output"
 echo "----------------------------"
 
-$SRCDIR/utils mysqlreport $MYSQLREPORTOPT 2>/dev/null
+$SRCDIR/utils/mysqlreport $MYSQLREPORTOPT 2>/dev/null
 
 }
 
