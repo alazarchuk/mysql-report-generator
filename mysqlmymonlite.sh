@@ -1801,7 +1801,7 @@ perfschema() {
 
 MYSQLVER=$(echo $MYSQLVER| cut -c1,2,3)
 
-if [ "$MYSQLVER" == '5.5' ]; then
+if [ "$MYSQLVER" == [5-9][.][5-9] ]; then
 
 if [ "$PSCHEMACHECK" == 'ON' ]; then
 
