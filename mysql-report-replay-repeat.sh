@@ -6,7 +6,7 @@
 # by Andrii Lazarchuk
 
 TRIES="1"
-REPORT_PATH="reports"
+REPORT_PATH="reports/`date "+%m%d%H%M%Y.%S"`"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
