@@ -42,13 +42,14 @@ echo '======================'
 ./mysqlmymonlite.sh dblist
 echo ''
 
-while [ $TRIES -gt 0 ]
+CURRENT_TRY = '1'
+while [ $TRIES -gt $CURRENT_TRY ]
 do
 echo '======================'
-echo "Try #$TRIES"
+echo "Try #$CURRENT_TRY"
 echo '======================'
 ./mysqlmymonlite.sh mysql > mysql-monitor-report-$TRIES.log 2>&1
 percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > mysql-playback-$TRIES.log 2>&1
 
-TRIES=$[$TRIES-1]
+CURRENT_TRY=$[$CURRENT_TRY+1]
 done
