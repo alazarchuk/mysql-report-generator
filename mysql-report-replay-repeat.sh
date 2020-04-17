@@ -25,7 +25,6 @@ case $key in
     ;;
     -r|--report-path)
     REPORT_PATH="$2"
-    mkdir $REPORT_PATH
     shift # past argument
     shift # past value
     ;;
@@ -39,6 +38,8 @@ done
 if [ -f ./etc/config.ini ]; then
 source "./etc/config.ini"
 fi
+
+mkdir $REPORT_PATH
 
 # TBD: Verify log file exist
 # TBD: Verify if $MYSQLHOST is set
