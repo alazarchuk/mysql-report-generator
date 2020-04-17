@@ -106,13 +106,13 @@ Usage
 
 Options:
 
-    -f - path to slow query log
+-f - path to slow query log
 
-    -t - how many times repeat report replay cycle
+-t - how many times repeat report replay cycle
 
-    -d - target database
-    
-    -r - report folder where reports will be saved, optional. Default value `reports/$(date "+%m%d%H%M%Y.%S")`
+-d - target database
+
+-r - report folder where reports will be saved, optional. Default value `reports/$(date "+%m%d%H%M%Y.%S")`
 
 Installing Percona Playback Tool
 --------------------------------
