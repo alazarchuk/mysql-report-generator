@@ -43,7 +43,7 @@ echo '======================'
 echo ''
 
 CURRENT_TRY='1'
-while [ $TRIES -gt $CURRENT_TRY ]
+while [ $TRIES -ge $CURRENT_TRY ]
 do
 echo '======================'
 echo "Try #$CURRENT_TRY"
