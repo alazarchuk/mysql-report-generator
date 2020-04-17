@@ -44,10 +44,14 @@ if [ -f ./etc/config.ini ]; then
 source "./etc/config.ini"
 fi
 
+MYSQLUSER=`sed -n '/^user=/s///p' ~/.my.cnf`
+MYSQLPASSWORD=sed -n '/^password=/s///p' ~/.my.cnf
+
 mkdir $REPORT_PATH
 
-# TBD: Verify log file exist
+# TBD: Verify log file exists
 # TBD: Verify if $MYSQLHOST is set
+# TBD: Verify if ~/.my.cnf exists
 
 CURRENT_TRY='1'
 while [ $TRIES -ge $CURRENT_TRY ]
@@ -63,7 +67,12 @@ export DATABASE
 echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
 REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY.log"
-percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --mysql-schema $DATABASE --query-log-file $LOGFILE > $REPORT_DEST 2>&1
+percona-playback --mysql-max-retries 1 \
+                 --mysql-host $MYSQLHOST \
+                 --mysql-schema $DATABASE \
+                 --mysql-username $MYSQLUSER \
+                 --mysql-password $MYSQLPASSWORD \
+                 --query-log-file $LOGFILE > $REPORT_DEST 2>&1
 echo "Report saved to $REPORT_DEST"
 echo ''
 CURRENT_TRY=$[$CURRENT_TRY+1]
