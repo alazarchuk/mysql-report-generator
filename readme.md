@@ -35,14 +35,14 @@ Download
     git clone https://github.com/alazarchuk/mysql-report-generator.git
     cd mysql-report-generator
 
-MySQL Reporting
----------------
+MySQL General Report
+--------------------
 
     ./mysqlmymonlite.sh mysql # For full report
     ./mysqlmymonlite.sh mysqlreport # Only output of mysqlreport tool
 
-MySQL Indexes
--------------
+MySQL Table Indexes Report
+--------------------------
 
     ./mysqlmymonlite.sh dblist
     employees innodb mysql performance_schema sys
