@@ -25,6 +25,7 @@ case $key in
     ;;
     -r|--report-path)
     REPORT_PATH="$2"
+    mkdir $REPORT_PATH
     shift # past argument
     shift # past value
     ;;
