@@ -49,5 +49,6 @@ echo "Try #$TRIES"
 echo '======================'
 ./mysqlmymonlite.sh mysql > mysql-monitor-report-$TRIES.log 2>&1
 percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > mysql-playback-$TRIES.log 2>&1
-i=$[$i-1]
+
+TRIES=$[$TRIES-1]
 done
