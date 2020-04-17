@@ -29,7 +29,7 @@ case $key in
     shift # past value
     ;;
     -d|--database)
-    DATABASE="$2"
+    export DATABASE="$2"
     shift # past argument
     shift # past value
     ;;
