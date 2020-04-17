@@ -42,7 +42,7 @@ echo '======================'
 ./mysqlmymonlite.sh dblist
 echo ''
 
-CURRENT_TRY = '1'
+CURRENT_TRY='1'
 while [ $TRIES -gt $CURRENT_TRY ]
 do
 echo '======================'
