@@ -45,7 +45,7 @@ source "./etc/config.ini"
 fi
 
 MYSQLUSER=`sed -n '/^user=/s///p' ~/.my.cnf`
-MYSQLPASSWORD=sed -n '/^password=/s///p' ~/.my.cnf
+MYSQLPASSWORD=`sed -n '/^password=/s///p' ~/.my.cnf`
 
 mkdir $REPORT_PATH
 
