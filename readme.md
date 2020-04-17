@@ -105,7 +105,30 @@ Usage
     ./mysql-report-replay-repeat.sh -f ~/ip-172-31-36-170-slow.log -t 4 -d employees
 
 Options:
+
     -f - path to slow query log
+
     -t - how many times repeat report replay cycle
+
     -d - target database
+    
     -r - report folder where reports will be saved, optional. Default value `reports/$(date "+%m%d%H%M%Y.%S")`
+
+Installing Percona Playback Tool
+--------------------------------
+
+    sudo apt-get install percona-toolkit mysql-client git vim
+    sudo apt-get install libtbb-dev libmysqlclient-dev libboost-program-options-dev libboost-thread-dev libboost-regex-dev libboost-system-dev libboost-chrono-dev pkg-config cmake  libssl-dev
+    git clone https://github.com/Percona-Lab/query-playback.git
+    cd query-playback/
+    sed -i 's/find_library(MYSQL_LIB "mysqlclient_r" PATH_SUFFIXES "mysql")/find_library(MYSQL_LIB "mysqlclient" PATH_SUFFIXES "mysql")/' percona_playback/mysql_client/CMakeLists.txt
+    // The above Sed command fixes type in the CMakeLists.txt file.
+    // You can manually edit the file and fix the typo as suggested below.
+    // vim percona_playback/mysql_client/CMakeLists.txt
+    // Remove _r, https://dba.stackexchange.com/questions/218736/replay-re-execute-mysql-select-queries-from-a-log-file
+
+    mkdir build_dir
+    cd build_dir
+    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+    make
+    sudo make install
