@@ -29,12 +29,17 @@ case $key in
 esac
 done
 
+if [ -f ./etc/config.ini ]; then
+source "./etc/config.ini"
+fi
+
 # TBD: Verify log file exist
+# TBD: Verify if $MYSQLHOST is set
 # Output DBs list and expose environment variables to code below
 echo '======================'
 echo 'DB List'
 echo '======================'
-. ./mysqlmymonlite.sh dblist
+./mysqlmymonlite.sh dblist
 echo ''
 
 while [ $TRIES -gt 0 ]
