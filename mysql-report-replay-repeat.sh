@@ -29,7 +29,7 @@ case $key in
     shift # past value
     ;;
     -d|--database)
-    export DATABASE="$2"
+    DATABASE="$2"
     shift # past argument
     shift # past value
     ;;
@@ -58,6 +58,7 @@ echo '======='
 echo ''
 echo 'Generating report'
 REPORT_DEST="$REPORT_PATH/mysql-monitor-report-$CURRENT_TRY.log"
+export DATABASE
 ./mysqlmymonlite.sh mysql > $REPORT_DEST 2>&1
 echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
