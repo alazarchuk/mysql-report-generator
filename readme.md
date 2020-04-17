@@ -93,3 +93,19 @@ MySQL Table Indexes Report
     | titles |          0 | PRIMARY  |            2 | title       | A         |      442426 |     NULL | NULL   |      | BTREE      |         |               |
     | titles |          0 | PRIMARY  |            3 | from_date   | A         |      442426 |     NULL | NULL   |      | BTREE      |         |               |
     +--------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+
+MySQL Benchmark or Report Replay Repeat
+=======================================
+
+There is additional in the repository that can run percona playback tool with provided slow query log and generate report couple times to see progress. You need to have `percona-playback` installed, `~/.my.cnf` created and slow query log generated.
+
+Usage
+-----
+
+    ./mysql-report-replay-repeat.sh -f ~/ip-172-31-36-170-slow.log -t 4 -d employees
+
+Options:
+    -f - path to slow query log
+    -t - how many times repeat report replay cycle
+    -d - target database
+    -r - report folder where reports will be saved, optional. Default value `reports/$(date "+%m%d%H%M%Y.%S")`
