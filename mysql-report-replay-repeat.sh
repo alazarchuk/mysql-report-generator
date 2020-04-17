@@ -6,6 +6,7 @@
 # by Andrii Lazarchuk
 
 TRIES="1"
+REPORT_PATH="reports"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -19,6 +20,11 @@ case $key in
     ;;
     -f|--slow-query-log-file)
     LOGFILE="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -r|--report-path)
+    REPORT_PATH="$2"
     shift # past argument
     shift # past value
     ;;
@@ -50,10 +56,13 @@ echo "Try #$CURRENT_TRY"
 echo '======='
 echo ''
 echo 'Generating report'
-./mysqlmymonlite.sh mysql > mysql-monitor-report-$CURRENT_TRY.log 2>&1
-echo "Report saved to mysql-monitor-report-$CURRENT_TRY.log"
+REPORT_DEST="$REPORT_PATH/mysql-monitor-report-$CURRENT_TRY.log"
+./mysqlmymonlite.sh mysql > $REPORT_DEST 2>&1
+echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
-percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > mysql-playback-$CURRENT_TRY.log 2>&1
-echo "Report saved to mysql-playback-$CURRENT_TRY.log"
+REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY.log"
+percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > $REPORT_DEST 2>&1
+echo "Report saved to $REPORT_DEST"
+echo ''
 CURRENT_TRY=$[$CURRENT_TRY+1]
 done
