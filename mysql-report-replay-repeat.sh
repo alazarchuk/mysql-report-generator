@@ -28,6 +28,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -d|--database)
+    DATABASE="$2"
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
@@ -43,12 +48,6 @@ mkdir $REPORT_PATH
 
 # TBD: Verify log file exist
 # TBD: Verify if $MYSQLHOST is set
-# Output DBs list and expose environment variables to code below
-echo '======='
-echo 'DB List'
-echo '======='
-./mysqlmymonlite.sh dblist
-echo ''
 
 CURRENT_TRY='1'
 while [ $TRIES -ge $CURRENT_TRY ]
@@ -63,7 +62,7 @@ REPORT_DEST="$REPORT_PATH/mysql-monitor-report-$CURRENT_TRY.log"
 echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
 REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY.log"
-percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > $REPORT_DEST 2>&1
+percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --mysql-schema $DATABASE --query-log-file $LOGFILE > $REPORT_DEST 2>&1
 echo "Report saved to $REPORT_DEST"
 echo ''
 CURRENT_TRY=$[$CURRENT_TRY+1]

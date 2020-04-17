@@ -271,7 +271,7 @@ MYSQLVER=$($MYSQLCLI $MYSQLADMINOPT -N -t -e "select version();" | grep -Ev '+--
 MYSQLUPTIME=`$MYSQLADMIN $MYSQLADMINOPT ext | awk '/Uptime|Uptime_since_flush_status/ { print $2,$4 }'`
 MYSQLUPTIMEFORMAT=`$MYSQLADMIN $MYSQLADMINOPT ver | $AWK '/Uptime/ { print $2, $3, $4, $5, $6, $7, $8, $9 }'`
 #MYSQLPID=`pidof mysqld`
-DATABASES=`$MYSQLCLI $MYSQLADMINOPT -e 'show databases;' | $GREP -Ev '(Database|information_schema)'`
+DATABASES="${DATABASE:-`$MYSQLCLI $MYSQLADMINOPT -e 'show databases;' | $GREP -Ev '(Database|information_schema)'`}"
 ALLDATABASES=`$MYSQLCLI $MYSQLADMINOPT -e 'show databases;' | $GREP -Ev '(Database|information_schema)' | sed ':a;N;$!ba;s/\n/ /g'`
 fi
 VIRTUALCORES=`$GREP -c ^processor /proc/cpuinfo`
