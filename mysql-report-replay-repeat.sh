@@ -36,20 +36,24 @@ fi
 # TBD: Verify log file exist
 # TBD: Verify if $MYSQLHOST is set
 # Output DBs list and expose environment variables to code below
-echo '======================'
+echo '======='
 echo 'DB List'
-echo '======================'
+echo '======='
 ./mysqlmymonlite.sh dblist
 echo ''
 
 CURRENT_TRY='1'
 while [ $TRIES -ge $CURRENT_TRY ]
 do
-echo '======================'
+echo '======='
 echo "Try #$CURRENT_TRY"
-echo '======================'
-./mysqlmymonlite.sh mysql > mysql-monitor-report-$TRIES.log 2>&1
-percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > mysql-playback-$TRIES.log 2>&1
-
+echo '======='
+echo ''
+echo 'Generating report'
+./mysqlmymonlite.sh mysql > mysql-monitor-report-$CURRENT_TRY.log 2>&1
+echo "Report saved to mysql-monitor-report-$CURRENT_TRY.log"
+echo 'Start queries playback'
+percona-playback --mysql-max-retries 1 --mysql-host $MYSQLHOST --query-log-file $LOGFILE > mysql-playback-$CURRENT_TRY.log 2>&1
+echo "Report saved to mysql-playback-$CURRENT_TRY.log"
 CURRENT_TRY=$[$CURRENT_TRY+1]
 done
