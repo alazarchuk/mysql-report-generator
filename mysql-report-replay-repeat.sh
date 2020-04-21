@@ -81,7 +81,6 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-password $MYSQLPASSWORD \
                  --dispatcher-plugin thread-pool \
                  --thread-pool-threads-count $THREADS \
-                 --queue-depth $THREADS \
                  --query-log-file $LOGFILE > $REPORT_DEST 2>&1
 echo "Writing report to $REPORT_DEST"
 echo ''
