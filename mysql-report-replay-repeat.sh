@@ -1,14 +1,13 @@
 #!/bin/bash
 #######################################################
 # Copyright (C) 2020
-# Program: mysqlmymonlite.sh
+# Program: mysql-report-replay-repeat.sh
 # MySQL benchmark and monitoring script 
 # by Andrii Lazarchuk
 
 REPEATS="1"
 THREADS="1"
 PROCS="1"
-RANDOMSEEK='f'
 REPORT_PATH="reports/$(date "+%m%d%H%M%Y.%S")"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -46,10 +45,6 @@ case $key in
     DATABASE="$2"
     shift # past argument
     shift # past value
-    ;;
-    --random-seek)
-    RANDOMSEEK='t'
-    shift
     ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
