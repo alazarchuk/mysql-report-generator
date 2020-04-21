@@ -73,16 +73,16 @@ echo "Try #$CURRENT_TRY"
 echo '======='
 echo ''
 echo 'Generating report'
-REPORT_DEST="$REPORT_PATH/mysql-monitor-report-$CURRENT_TRY.log"
+REPORT_DEST="$REPORT_PATH/mysql-monitor-report-try-$CURRENT_TRY.log"
 export DATABASE
 ./mysqlmymonlite.sh mysql > $REPORT_DEST 2>&1
 echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
 echo "Run $PROCS processes in parallel"
 CURRENT_PROC='1'
-REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY-proc-$CURRENT_PROC.log"
 while [ $PROCS -ge $CURRENT_PROC ]
 do
+REPORT_DEST="$REPORT_PATH/mysql-playback-try-$CURRENT_TRY-proc-$CURRENT_PROC.log"
 percona-playback --mysql-max-retries 1 \
                  --mysql-host $MYSQLHOST \
                  --mysql-schema $DATABASE \
