@@ -14,7 +14,7 @@ do
 key="$1"
 
 case $key in
-    -r|--repeat)
+    -r|--repeats)
     REPEATS="$2"
     shift # past argument
     shift # past value
@@ -79,6 +79,8 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-schema $DATABASE \
                  --mysql-username $MYSQLUSER \
                  --mysql-password $MYSQLPASSWORD \
+                 --thread-pool-threads-count $THREADS \
+                 --queue-depth $THREADS \
                  --query-log-file $LOGFILE > $REPORT_DEST 2>&1
 echo "Writing report to $REPORT_DEST"
 echo ''
