@@ -79,6 +79,7 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-schema $DATABASE \
                  --mysql-username $MYSQLUSER \
                  --mysql-password $MYSQLPASSWORD \
+                 --dispatcher-plugin thread-pool \
                  --thread-pool-threads-count $THREADS \
                  --queue-depth $THREADS \
                  --query-log-file $LOGFILE > $REPORT_DEST 2>&1
