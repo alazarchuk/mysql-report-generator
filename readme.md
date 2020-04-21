@@ -108,7 +108,7 @@ Options:
 
 -f - path to slow query log
 
--t - how many times repeat report replay cycle
+-r - how many times repeat report replay cycle
 
 -d - target database
 

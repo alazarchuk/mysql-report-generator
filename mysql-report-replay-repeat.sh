@@ -7,6 +7,7 @@
 
 REPEATS="1"
 THREADS="1"
+PROCS="1"
 REPORT_PATH="reports/$(date "+%m%d%H%M%Y.%S")"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -21,6 +22,11 @@ case $key in
     ;;
     -t|--threads)
     THREADS="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -p|--processes)
+    PROCS="$2"
     shift # past argument
     shift # past value
     ;;
@@ -72,8 +78,11 @@ export DATABASE
 ./mysqlmymonlite.sh mysql > $REPORT_DEST 2>&1
 echo "Report saved to $REPORT_DEST"
 echo 'Start queries playback'
-echo "Run $THREADS threads in parallel"
-REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY.log"
+echo "Run $PROCS processes in parallel"
+CURRENT_PROC='1'
+REPORT_DEST="$REPORT_PATH/mysql-playback-$CURRENT_TRY-proc-$CURRENT_PROC.log"
+while [ $PROCS -ge $CURRENT_PROC ]
+do
 percona-playback --mysql-max-retries 1 \
                  --mysql-host $MYSQLHOST \
                  --mysql-schema $DATABASE \
@@ -81,8 +90,12 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-password $MYSQLPASSWORD \
                  --dispatcher-plugin thread-pool \
                  --thread-pool-threads-count $THREADS \
-                 --query-log-file $LOGFILE > $REPORT_DEST 2>&1
+                 --query-log-file $LOGFILE > $REPORT_DEST 2>&1 &
 echo "Writing report to $REPORT_DEST"
-echo ''
+CURRENT_PROC=$[$CURRENT_PROC+1]
+done
+echo 'Waiting for playback to complete'
+wait
+echo 'Done'
 CURRENT_TRY=$[$CURRENT_TRY+1]
 done
