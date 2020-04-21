@@ -8,6 +8,7 @@
 REPEATS="1"
 THREADS="1"
 PROCS="1"
+RANDOMSEEK='f'
 REPORT_PATH="reports/$(date "+%m%d%H%M%Y.%S")"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -32,6 +33,7 @@ case $key in
     ;;
     -f|--slow-query-log-file)
     LOGFILE="$2"
+    LOGFILESIZE=`wc -l $LOGFILE | awk '{print $1;}'`
     shift # past argument
     shift # past value
     ;;
@@ -44,6 +46,10 @@ case $key in
     DATABASE="$2"
     shift # past argument
     shift # past value
+    ;;
+    --random-seek)
+    RANDOMSEEK='t'
+    shift
     ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
@@ -83,6 +89,7 @@ CURRENT_PROC='1'
 while [ $PROCS -ge $CURRENT_PROC ]
 do
 REPORT_DEST="$REPORT_PATH/mysql-playback-try-$CURRENT_TRY-proc-$CURRENT_PROC.log"
+tail -n $((RANDOM%LOGFILESIZE)) $LOGFILE |
 percona-playback --mysql-max-retries 1 \
                  --mysql-host $MYSQLHOST \
                  --mysql-schema $DATABASE \
@@ -90,7 +97,7 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-password $MYSQLPASSWORD \
                  --dispatcher-plugin thread-pool \
                  --thread-pool-threads-count $THREADS \
-                 --query-log-file $LOGFILE > $REPORT_DEST 2>&1 &
+                 --query-log-file /dev/stdin > $REPORT_DEST 2>&1 &
 echo "Writing report to $REPORT_DEST"
 CURRENT_PROC=$[$CURRENT_PROC+1]
 done
