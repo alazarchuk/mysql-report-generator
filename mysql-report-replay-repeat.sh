@@ -89,7 +89,8 @@ CURRENT_PROC='1'
 while [ $PROCS -ge $CURRENT_PROC ]
 do
 REPORT_DEST="$REPORT_PATH/mysql-playback-try-$CURRENT_TRY-proc-$CURRENT_PROC.log"
-tail -n $((RANDOM%LOGFILESIZE)) $LOGFILE |
+TMPFILE=$(mktemp)
+tail -n $((RANDOM%LOGFILESIZE)) $LOGFILE > $TMPFILE
 percona-playback --mysql-max-retries 1 \
                  --mysql-host $MYSQLHOST \
                  --mysql-schema $DATABASE \
@@ -97,7 +98,7 @@ percona-playback --mysql-max-retries 1 \
                  --mysql-password $MYSQLPASSWORD \
                  --dispatcher-plugin thread-pool \
                  --thread-pool-threads-count $THREADS \
-                 --query-log-file /dev/stdin > $REPORT_DEST 2>&1 &
+                 --query-log-file $TMPFILE > $REPORT_DEST 2>&1 &
 echo "Writing report to $REPORT_DEST"
 CURRENT_PROC=$[$CURRENT_PROC+1]
 done
