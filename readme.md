@@ -102,13 +102,17 @@ There is additional in the repository that can run percona playback tool with pr
 Usage
 -----
 
-    ./mysql-report-replay-repeat.sh -f ~/ip-172-31-36-170-slow.log -t 4 -d employees
+    ./mysql-report-replay-repeat.sh -f ~/ip-172-31-36-170-slow.log -t 4 -r 10 -p 10 -d employees
 
 Options:
 
--f - path to slow query log
+-f - path to slow query log. Each command will received randomly truncated file to create uneven load.
 
 -r - how many times repeat report replay cycle
+
+-p - how many parallel processes to run simultaneously
+
+-t - how many threads percona-playback can use to run benchmark
 
 -d - target database
 
